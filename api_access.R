@@ -21,55 +21,59 @@ retreive_data<-function(url){
 get_all_municipality<-function(){
   url<-"http://api.kolada.se/v1/municipality"
   d<-retreive_data(url)
-  print(d)
+  return(d)
 }
 #get_all_municipality()
 
 
 # search area
-search_area<-function(){
+
+search_area<-function(area_name){
   search_area_url<-"http://api.kolada.se/v1/municipality/"
-  area_name=readline("Input area name:")
   #area_name<-gsub(pattern = " ", replacement = "%20", x = area_name)
   search_area_url<-paste(search_area_url,area_name,sep="")
   search_area_url<-URLencode(search_area_url)
   print(search_area_url)
   d<-retreive_data(search_area_url)
-  print(d)
+  return(d)
 }
-search_area()
+area_name=readline("Input area name:")
+search_area(area_name)
 
 # get KPI 
 get_all_KPI<-function(){
   url<-"http://api.kolada.se/v1/kpi/"
   d<-retreive_data(url)
-  print(d)
+  return (d)
 }
 get_all_KPI()
 
-search_KPI<-function(){
+
+search_KPI<-function(KPI_str){
   search_KPI_url<-"http://api.kolada.se/v1/kpi/"
-  KPI_str<-readline("Input KPI str:")
   search_KPI_url<-paste(search_KPI_url,KPI_str,sep="")
   search_KPI_url<-URLencode(search_KPI_url)
   d<-retreive_data(search_KPI_url)
-  print(d)
+  return(d)
 }
-search_KPI()
+KPI_str<-readline("Input KPI str:")
+search_KPI(KPI_str)
 
 # search Enheter
-search_enheter<-function(){
+
+search_enheter<-function(id_str){
   url<-"http://api.kolada.se/v1/ou/"
-  id_str<-readline("Input ID:")
+
   search_enheter_url<-paste(url,id_str,sep="")
   d<-retreive_data(search_enheter_url)
-  print(d)
+  return(d)
 }
-search_enheter()
+id_str<-readline("Input ID:")
+search_enheter(id_str)
 
-get_data<-function(){
+
+get_data<-function(input_str){
   url<-"http://api.kolada.se/v1/data/"
-  input_str<-readline("Input search data:")
   input<-(unlist(strsplit(input_str,split=" ")))
   if(input[1]=="exact"){
     kpi<-input[2]
@@ -88,12 +92,12 @@ get_data<-function(){
     return ("error input")
   }
 }
-#get_data()
+input_str<-readline("Input search data:")
+get_data(input_str)
 
 # Enhetsdata
-get_enhets<-function(){
+get_enhets<-function(input_str){
   url<-"http://api.kolada.se/v1/ou/data/"
-  input_str<-readline("Input search enhets data:")
   input<-(unlist(strsplit(input_str,split=" ")))
   if(input[1]=="exact"){
     kpi<-input[2]
@@ -112,4 +116,5 @@ get_enhets<-function(){
     return ("error input")
   }
 }
-get_enhets()
+input_str<-readline("Input search enhets data:")
+get_enhets(input_str)
