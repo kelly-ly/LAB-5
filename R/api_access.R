@@ -34,23 +34,52 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             }
                             url<-URLencode(url)
                             d<-fromJSON(url)
+                            if(search_type=="kpi_groups"||search_type=="municipality_groups"){
+                              d<-as.data.frame(d)
+                              df<-data.frame()
+                              for(i in 1:nrow(d)){
+                                value<-as.data.frame(d[i,3])
+                                id<-d[i,2]
+                                title<-d[i,4]
+                                value$id<-id
+                                value$title<-title
+                                df<-rbind(df,value)
+                              }
+                              return (df)
+                            }
                             return(as.data.frame(d))
                           },
                           search_with_id=function(search_type,input_str){
                             url<-"http://api.kolada.se/v2/"
                             if(search_type=="kpi"){
-                              url<-paste(url,"kpi/",input_str)
+                              url<-paste(url,"kpi/",input_str,sep="")
                             }else if(search_type=="kpi_groups"){
-                              url<-paste(url,"kpi_groups",input_str)
-                            }else if(search_type=="municipality/"){
-                              url<-paste(url,"municipality/",input_str)
+                              url<-paste(url,"kpi_groups/",input_str,sep="")
+                            }else if(search_type=="municipality"){
+                              url<-paste(url,"municipality/",input_str,sep="")
                             }else if(search_type=="municipality_groups"){
-                              url<-paste(url,"municipality_groups/",input_str)
+                              url<-paste(url,"municipality_groups/",input_str,sep="")
                             }else if(search_type=="ou"){
-                              url<-paste(url,"ou/",input_str)
+                              url<-paste(url,"ou/",input_str,sep="")
                             }else{
                               return ("error")
                             }
+                            url<-URLencode(url)
+                            d<-fromJSON(url)
+                            if(search_type=="kpi_groups"||search_type=="municipality_groups"){
+                              d<-as.data.frame(d)
+                              df<-data.frame()
+                              for(i in 1:nrow(d)){
+                                value<-as.data.frame(d[i,3])
+                                id<-d[i,2]
+                                title<-d[i,4]
+                                value$id<-id
+                                value$title<-title
+                                df<-rbind(df,value)
+                              }
+                              return (df)
+                            }
+                            return(as.data.frame(d))
                           },
                           search_data=function(input_kpi,input_municipality,input_year){
                             url<-"http://api.kolada.se/v2/data"
@@ -89,8 +118,15 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                         ) )
 
 k1<-kolada_api$new()
+d<-k1$search_with_title("kpi_groups","kostnad")
+f<-k1$search_with_title("municipality_groups","stockholm")
+e<-k1$search_with_id("municipality_groups","G124026")
 k1$search_data(input_kpi=c(),input_municipality=c(1860),input_year=c(2009,2010))
 k1$search_with_title("municipality","lund")
+
+url<-"http://api.kolada.se/v2/kpi_groups?title=kostnad"
+test<-fromJSON(url)
+test<-as.data.frame(test)
 
 #k1$search_area("Stockholms läns landsting")
 # 
