@@ -1,5 +1,6 @@
 library(jsonlite)
-
+#library(rsconnect)
+#rsconnect::deployApp('')
 retreive_data<-function(url){
   paging_data<-fromJSON(url)
   data<-paging_data$value
@@ -23,8 +24,7 @@ get_all_municipality<-function(){
   d<-retreive_data(url)
   return(d)
 }
-#get_all_municipality()
-
+get_all_municipality()
 
 # search area
 
@@ -44,9 +44,10 @@ search_area(area_name)
 get_all_KPI<-function(){
   url<-"http://api.kolada.se/v1/kpi/"
   d<-retreive_data(url)
-  return (d)
+  return (as.data.frame(d))
 }
-get_all_KPI()
+df<-get_all_KPI()
+
 
 
 search_KPI<-function(KPI_str){
