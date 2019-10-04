@@ -93,7 +93,9 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                               #municipality_str<-paste(as.character(input_municipality),collapse = ",")
                               url<-paste(url,"/municipality/",input_municipality,sep="")
                             }
-                            if(nchar(input_year!=0)){
+                            if(nchar(input_year)!=0){
+                              print(nchar(input_year))
+                              print(input_year)
                               #year_str<-paste(as.character(input_year),collapse = ",")
                               url<-paste(url,"/year/",input_year,sep="")
                             }
@@ -120,7 +122,7 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                               #ou_str<-paste(as.character(input_ou),collapse = ",")
                               url<-paste(url,"/ou/",input_ou,sep="")
                             }
-                            if(nchar(input_year!=0)){
+                            if(nchar(input_year)!=0){
                               #year_str<-paste(as.character(input_year),collapse = ",")
                               url<-paste(url,"/year/",input_year,sep="")
                             }
@@ -142,7 +144,8 @@ k1<-kolada_api$new()
 #f<-k1$search_with_title("municipality_groups","stockholm")
 #e<-k1$search_with_id("municipality_groups","G124026")
 #g<-k1$search_data(input_kpi=c(),input_municipality=c(1860),input_year=c(2009,2010))
-j<-k1$search_data(input_kpi="N00945",input_municipality = "",input_year="2009,2007")
+#j<-k1$search_data(input_kpi="N00945",input_municipality = "",input_year="2009,2007")
+k<-k1$search_data(input_kpi="N00945",input_municipality = "1860",input_year="")
 h<-k1$search_ou(input_kpi = "N15033,N15030",input_ou = "V15E144001301,V15E144001101",input_year = "2009,2008,2007")
 k1$search_with_title("municipality","lund")
 
