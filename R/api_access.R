@@ -84,16 +84,16 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                           search_data=function(input_kpi,input_municipality,input_year){
                             url<-"http://api.kolada.se/v2/data"
                             if(length(input_kpi)!=0){
-                              kpi_str<-paste(as.character(input_kpi),collapse = ",")
-                              url<-paste(url,"/kpi/",kpi_str,sep = "")
+                              #kpi_str<-paste(as.character(input_kpi),collapse = ",")
+                              url<-paste(url,"/kpi/",input_kpi,sep = "")
                             }
                             if(length(input_municipality)!=0){
-                              municipality_str<-paste(as.character(input_municipality),collapse = ",")
-                              url<-paste(url,"/municipality/",municipality_str,sep="")
+                              #municipality_str<-paste(as.character(input_municipality),collapse = ",")
+                              url<-paste(url,"/municipality/",input_municipality,sep="")
                             }
                             if(length(input_year!=0)){
-                              year_str<-paste(as.character(input_year),collapse = ",")
-                              url<-paste(url,"/year/",year_str,sep="")
+                              #year_str<-paste(as.character(input_year),collapse = ",")
+                              url<-paste(url,"/year/",input_year,sep="")
                             }
                             d<-fromJSON(url)
                             
@@ -110,16 +110,16 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                           search_ou=function(input_kpi,input_ou,input_year){
                             url<-"http://api.kolada.se/v2/oudata"
                             if(length(input_kpi)!=0){
-                              kpi_str<-paste(as.character(input_kpi),collapse = ",")
-                              url<-paste(url,"/kpi/",kpi_str,sep = "")
+                              #kpi_str<-paste(as.character(input_kpi),collapse = ",")
+                              url<-paste(url,"/kpi/",input_kpi,sep = "")
                             }
                             if(length(input_ou)!=0){
-                              ou_str<-paste(as.character(input_ou),collapse = ",")
-                              url<-paste(url,"/ou/",ou_str,sep="")
+                              #ou_str<-paste(as.character(input_ou),collapse = ",")
+                              url<-paste(url,"/ou/",input_ou,sep="")
                             }
                             if(length(input_year!=0)){
-                              year_str<-paste(as.character(input_year),collapse = ",")
-                              url<-paste(url,"/year/",year_str,sep="")
+                              #year_str<-paste(as.character(input_year),collapse = ",")
+                              url<-paste(url,"/year/",input_year,sep="")
                             }
                             d<-fromJSON(url)
                             d<-as.data.frame(d)
@@ -139,7 +139,7 @@ k1<-kolada_api$new()
 #f<-k1$search_with_title("municipality_groups","stockholm")
 #e<-k1$search_with_id("municipality_groups","G124026")
 #g<-k1$search_data(input_kpi=c(),input_municipality=c(1860),input_year=c(2009,2010))
-h<-k1$search_ou(input_kpi = c("N15033,N15030"),input_ou = c("V15E144001301","V15E144001101"),input_year = c(2009,2008,2007))
+h<-k1$search_ou(input_kpi = "N15033,N15030",input_ou = "V15E144001301,V15E144001101",input_year = "2009,2008,2007")
 k1$search_with_title("municipality","lund")
 
 url<-"http://api.kolada.se/v2/kpi_groups?title=kostnad"
