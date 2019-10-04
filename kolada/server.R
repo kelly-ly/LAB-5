@@ -1,3 +1,5 @@
+library("assignment5Package")
+
 shinyServer(
   function(input, output, session){
     library(assignment5Package)
