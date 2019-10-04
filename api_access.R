@@ -64,7 +64,7 @@ search_KPI(KPI_str)
 
 search_enheter<-function(id_str){
   url<-"http://api.kolada.se/v1/ou/"
-
+  
   search_enheter_url<-paste(url,id_str,sep="")
   d<-retreive_data(search_enheter_url)
   return(d)
