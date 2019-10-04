@@ -1,11 +1,13 @@
 shinyServer(
   function(input, output){
+    library(assignment5Package)
+    k1<-kolada_api$new()
     func_input <- reactive({
       switch(input$functions,
-             "Search Area" = search_area(input$area_name),
-             "Search KPI" = search_KPI(input$KPI_str),
-             "Search Enheter" = search_enheter(input$id_str),
-             "Get Data" = get_data(input$exact))
+             "Search Area" = k1$search_area(input$area_name),
+             "Search KPI" = k1$search_KPI(input$KPI_str),
+             "Search Enheter" = k1$search_enheter(input$id_str),
+             "Get Data" = k1$get_data(input$exact))
     })
     
     output$result <- renderTable({
