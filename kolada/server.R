@@ -1,24 +1,21 @@
 shinyServer(
-  function(input, output){
+  function(input, output, session){
     library(assignment5Package)
-    k1<-kolada_api$new()
+    kolada<-kolada_api$new()
+    
     func_input <- reactive({
       switch(input$functions,
-             "Search Area" = k1$search_area(input$area_name),
-             "Search KPI" = k1$search_KPI(input$KPI_str),
-             "Search Enheter" = k1$search_enheter(input$id_str),
-             "Get Data" = k1$get_data(input$exact))
+             "Search By Title" = kolada$search_with_title(input$title_search_type, input$title_input_str),
+             "Search By ID" = kolada$search_with_id(input$id_search_type, input$id_input_str),
+             "Search Data" = kolada$search_data(input$data_input_kpi, input$data_input_municipality, input$data_input_year),
+             "Search OU" = kolada$search_ou(input$ou_input_kpi, input$ou_input_ou, input$ou_input_year))
     })
     
-    output$result <- renderTable({
-      functions <- func_input()
-      print(functions)
+    output$result <- renderDataTable({
+      func_input()
     })
-    
     output$summary <- renderText({
       paste("Function: ", input$functions, "\nNumber of results: ", nrow(func_input()))
     })
-  
   }
 )
-
