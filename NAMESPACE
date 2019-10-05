@@ -2,3 +2,4 @@
 
 export(kolada_api)
 exportClasses(kolada_api)
+import(jsonlite)

@@ -8,3 +8,6 @@ before_install:
 
 install: 
   - Rscript -e 'install.packages(c("curl"))'
+  
+r_binary_packages:
+ - testthat

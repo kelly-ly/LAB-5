@@ -12,4 +12,4 @@ Encoding: UTF-8
 Depends: R (>= 3.5.0), jsonlite
 Suggests: testthat (>= 2.1.0), knitr, rmarkdown
 VignetteBuilder: knitr
-Imports: methods
+Imports: methods, curl

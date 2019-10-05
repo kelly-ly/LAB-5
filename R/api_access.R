@@ -9,6 +9,7 @@
 #' kolada_mod$search_with_id(search_type = "municipality_groups", input_str = "G124026")
 #' kolada_mod$search_data(input_kpi="N00945",input_municipality="1860",input_year="")
 #' kolada_mod$search_ou("N15033,N15030","V15E144001301,V15E144001101","2009,2008,2007")
+#' @import jsonlite
 #' @export kolada_api
 #' @exportClass kolada_api
 
