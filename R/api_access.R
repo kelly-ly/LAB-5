@@ -1,3 +1,17 @@
+# KOLADA API Reference Class Object
+
+#' KOLADA API Reference Class Object
+#' @param muni data frame of municipality
+#' @param kpi data frame of KPI
+#' @examples
+#' kolada_mod <- kolada_api$new()
+#' kolada_mod$search_with_title(search_type = "municipality", input_str = "lund")
+#' kolada_mod$search_with_id(search_type = "municipality_groups", input_str = "G124026")
+#' kolada_mod$search_data(input_kpi="N00945",input_municipality="1860",input_year="")
+#' kolada_mod$search_ou("N15033,N15030","V15E144001301,V15E144001101","2009,2008,2007")
+#' @export kolada_api
+#' @exportClass kolada_api
+
 kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.frame") 
                         ,methods =list(
                           initialize=function(municipality,kpi){
@@ -30,10 +44,13 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             }else if(search_type=="ou"){
                               url<-paste(url,"ou?title=",input_str,sep="")
                             }else{
-                              return ("error")
+                              return ("Wrong Search Type!")
                             }
                             url<-URLencode(url)
                             d<-fromJSON(url)
+                            if(d$count == 0){
+                              return("0 result found.")
+                            }
                             if(search_type=="kpi_groups"||search_type=="municipality_groups"){
                               d<-as.data.frame(d)
                               df<-data.frame()
@@ -62,10 +79,13 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             }else if(search_type=="ou"){
                               url<-paste(url,"ou/",input_str,sep="")
                             }else{
-                              return ("error")
+                              return ("Wrong Search Type!")
                             }
                             url<-URLencode(url)
                             d<-fromJSON(url)
+                            if(d$count == 0){
+                              return("0 result found.")
+                            }
                             if(search_type=="kpi_groups"||search_type=="municipality_groups"){
                               d<-as.data.frame(d)
                               df<-data.frame()
@@ -88,20 +108,22 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                               url<-paste(url,"/kpi/",input_kpi,sep = "")
                             }
                             if(nchar(input_municipality)!=0){
-                              print(input_municipality)
-                              print(length(input_municipality))
+                              # print(input_municipality)
+                              # print(length(input_municipality))
                               #municipality_str<-paste(as.character(input_municipality),collapse = ",")
                               url<-paste(url,"/municipality/",input_municipality,sep="")
                             }
                             if(nchar(input_year)!=0){
-                              print(nchar(input_year))
-                              print(input_year)
+                              # print(nchar(input_year))
+                              # print(input_year)
                               #year_str<-paste(as.character(input_year),collapse = ",")
                               url<-paste(url,"/year/",input_year,sep="")
                             }
-                            print(url)
+                            # print(url)
                             d<-fromJSON(url)
-                            
+                            if(d$count == 0){
+                              return("0 result found.")
+                            }
                             d<-as.data.frame(d)
                             df<-data.frame()
                             for(i in 1:nrow(d)){
@@ -127,6 +149,9 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                               url<-paste(url,"/year/",input_year,sep="")
                             }
                             d<-fromJSON(url)
+                            if(d$count == 0){
+                              return("0 result found.")
+                            }
                             d<-as.data.frame(d)
                             df<-data.frame()
                             for(i in 1:nrow(d)){
