@@ -4,4 +4,7 @@ language: R
 cache: packages
 
 before_install: 
-  - Rscript -e 'install.packages(c("knitr", "jsonlite", "curl"))'
+  - Rscript -e 'install.packages(c("knitr", "jsonlite"))'
+
+install: 
+  - Rscript -e 'install.packages(c("curl"))'
