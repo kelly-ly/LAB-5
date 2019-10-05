@@ -9,5 +9,6 @@ before_install:
 install: 
   - Rscript -e 'install.packages(c("curl"))'
   
-r_binary_packages:
- - testthat
+addons:
+  apt:
+    packages: libgsl0-dev
