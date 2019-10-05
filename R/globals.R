@@ -1,1 +1,1 @@
-utils::globalVariables(c("new"))
+utils::globalVariables(c("methods", "new"))
