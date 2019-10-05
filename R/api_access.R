@@ -15,7 +15,7 @@
 kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.frame") 
                         ,methods =list(
                           initialize=function(municipality,kpi){
-                            library(jsonlite)
+                            # library(jsonlite)
                             muni<<-get_all_municipality()
                             kpi<<-get_all_KPI()
                           },
