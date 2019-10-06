@@ -1,3 +1,5 @@
+# runGitHub("kelly-ly/LAB-5", subdir = "./App")
+
 shinyUI(
   pageWithSidebar(
     headerPanel("Kolada API"),
@@ -36,7 +38,11 @@ shinyUI(
       conditionalPanel(condition = "input.functions == 'Search OU'",
                        textInput("ou_input_kpi", "KPI:", "N15033,N15030"),
                        textInput("ou_input_ou", "OU:", "V15E144001301,V15E144001101"),
-                       textInput("ou_input_year", "Year:", "2009,2008,2007"))
+                       textInput("ou_input_year", "Year:", "2009,2008,2007")),
+      
+      
+      helpText('****************************************', br(),
+               'runGitHub: runGitHub("kelly-ly/LAB-5", subdir = "./App")')
 
     ),
     mainPanel(
