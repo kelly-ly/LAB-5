@@ -16,7 +16,11 @@ shinyServer(
       func_input()
     })
     output$summary <- renderText({
-      paste("Function: ", input$functions, "\nNumber of results: ", nrow(func_input()))
+      if(!is.null(nrow(func_input())))
+        num_resul <- nrow(func_input())
+      else
+        num_resul <- 0
+      paste("Function: ", input$functions, "\nNumber of results: ", num_resul)
     })
   }
 )
