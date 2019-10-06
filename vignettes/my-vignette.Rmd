@@ -17,3 +17,82 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(assignment5Package)
 ```
+
+# KOLADA API
+Kolada provides a web-service for accessing standardized key performance indicators (KPI) concerning Swedish municipalities and organizational units. The database is created and upheld by RKA This project describes that API and includes examples for accessing it. We build a class to provide access and query function to filter the data with custom keywords or ids in Kolada.
+
+## get_all_municipality()
+This function returns all municipality data in kolada database.
+```{r}
+k1<-kolada_api$new()
+muni<-k1$get_all_municipality()
+head(muni)
+```
+
+## get_all_KPI()
+This function returns all KPI data in kolada database.
+```{r}
+k1<-kolada_api$new()
+kpi<-k1$get_all_municipality()
+head(kpi)
+```
+
+## search_with_title(search_type,input_str)
+This function provides two parameters, the first one is search type include kpi,kpi_groups,municipality,municipality_groups and ou, the second one is string input by users including titles. Returns a data frame of result.
+```{r}
+k1<-kolada_api$new()
+result1<-k1$search_with_title(search_type = "municipality", input_str = "lund")
+result2<-k1$search_with_title(search_type = "municipality_groups", input_str = "Linköping")
+result3<-k1$search_with_title(search_type = "ou", input_str = "Linköping")
+result4<-k1$search_with_title(search_type = "kpi", input_str = "Personalkostnader")
+result5<-k1$search_with_title(search_type = "kpi_groups", input_str = "funktionsnedsättning")
+head(result1)
+head(result2)
+head(result3)
+head(result4)
+head(result5)
+```
+
+## search_with_id(search_type,input_str)
+This function provides two parameters, the first one is search type include kpi,kpi_groups,municipality,municipality_groups and ou, the second one is string input by users including ids. Returns a data frame of result.
+```{r}
+k1<-kolada_api$new()
+result1<-k1$search_with_id(search_type = "municipality", input_str = "0580")
+result2<-k1$search_with_id(search_type = "municipality_groups", input_str = "G123885")
+result3<-k1$search_with_id(search_type = "ou", input_str = "V15E011400101")
+result4<-k1$search_with_id(search_type = "kpi", input_str = "N00005")
+result5<-k1$search_with_id(search_type = "kpi_groups", input_str = "G2KPI110397")
+head(result1)
+head(result2)
+head(result3)
+head(result4)
+head(result5)
+```
+
+## search_data(input_kpi,input_municipality,input_year)
+This function requires two or three parameters to perform a query.
+```{r}
+k1<-kolada_api$new()
+result1<-k1$search_data(input_kpi="N00945",input_municipality="1860",input_year="2009,2007")
+result2<-k1$search_data(input_kpi="N00945",input_municipality="",input_year="2009,2007")
+result3<-k1$search_data(input_kpi="N00945",input_municipality="1860",input_year="")
+result4<-k1$search_data(input_kpi="",input_municipality="1860",input_year="2009,2007")
+head(result1)
+head(result2)
+head(result3)
+head(result4)
+```
+
+## search_ou(input_kpi,input_ou,input_year)
+This function searches data about organizational unit, as the previous function, requires two or three parameters.
+```{r}
+k1<-kolada_api$new()
+result1<-k1$search_ou(input_kpi="N15033,N15030",input_ou="V15E144001301,V15E144001101",input_year="2009,2008,2007")
+result2<-k1$search_ou(input_kpi="",input_ou="V15E144001301,V15E144001101",input_year="2009,2008,2007")
+result3<-k1$search_ou(input_kpi="N15033,N15030",input_ou="",input_year="2009,2008,2007")
+result4<-k1$search_ou(input_kpi="N15033,N15030",input_ou="V15E144001301,V15E144001101",input_year="")
+head(result1)
+head(result2)
+head(result3)
+head(result4)
+```
