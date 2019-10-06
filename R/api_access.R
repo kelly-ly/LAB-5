@@ -10,9 +10,9 @@
 #' kolada_mod$search_data(input_kpi="N00945",input_municipality="1860",input_year="")
 #' kolada_mod$search_ou("N15033,N15030","V15E144001301,V15E144001101","2009,2008,2007")
 #' @import jsonlite
+
 #' @export kolada_api
 #' @exportClass kolada_api
-
 kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.frame") 
                         ,methods =list(
                           initialize=function(municipality,kpi){
@@ -32,7 +32,10 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             d<-fromJSON(url)
                             return (as.data.frame(d))
                           },
+                          
                           search_with_title=function(search_type,input_str){
+
+                            "user select search type and input the title, function returns a data frame of result"
                             url<-"http://api.kolada.se/v2/"
                             if(search_type=="kpi"){
                               url<-paste(url,"kpi?title=",input_str,sep="")
@@ -67,7 +70,12 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             }
                             return(as.data.frame(d))
                           },
+                          
+
                           search_with_id=function(search_type,input_str){
+                            #' @param search_type id type that user selected
+                            #' @param input_str id input by users
+                            "user select search type and input the id, function returns a data frame of result"
                             url<-"http://api.kolada.se/v2/"
                             if(search_type=="kpi"){
                               url<-paste(url,"kpi/",input_str,sep="")
@@ -102,7 +110,9 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             }
                             return(as.data.frame(d))
                           },
+                          
                           search_data=function(input_kpi,input_municipality,input_year){
+                            "Search data when all three parameters or only two are given.Functions returns a data frame."
                             url<-"http://api.kolada.se/v2/data"
                             if(nchar(input_kpi)!=0){
                               #kpi_str<-paste(as.character(input_kpi),collapse = ",")
@@ -136,6 +146,7 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                             return (df)
                           },
                           search_ou=function(input_kpi,input_ou,input_year){
+                            "Search orgranization unit when all three parameters or only two are given.Functions returns a data frame."
                             url<-"http://api.kolada.se/v2/oudata"
                             if(nchar(input_kpi)!=0){
                               #kpi_str<-paste(as.character(input_kpi),collapse = ",")
@@ -166,18 +177,6 @@ kolada_api<-setRefClass("kolada_api",fields =list(muni="data.frame",kpi="data.fr
                         ) )
 
 k1<-kolada_api$new()
-#d<-k1$search_with_title("kpi_groups","kostnad")
-#f<-k1$search_with_title("municipality_groups","stockholm")
-#e<-k1$search_with_id("municipality_groups","G124026")
-#g<-k1$search_data(input_kpi=c(),input_municipality=c(1860),input_year=c(2009,2010))
-#j<-k1$search_data(input_kpi="N00945",input_municipality = "",input_year="2009,2007")
-k<-k1$search_data(input_kpi="N00945",input_municipality = "1860",input_year="")
-h<-k1$search_ou(input_kpi = "N15033,N15030",input_ou = "V15E144001301,V15E144001101",input_year = "2009,2008,2007")
-k1$search_with_title("municipality","lund")
-
-url<-"http://api.kolada.se/v2/kpi_groups?title=kostnad"
-test<-fromJSON(url)
-test<-as.data.frame(test)
 
 #k1$search_area("Stockholms läns landsting")
 # 
